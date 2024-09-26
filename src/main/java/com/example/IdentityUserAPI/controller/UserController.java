@@ -1,5 +1,6 @@
 package com.example.IdentityUserAPI.controller;
 
+import com.example.IdentityUserAPI.dto.request.ApiResponse;
 import com.example.IdentityUserAPI.dto.request.UserCreationRequest;
 import com.example.IdentityUserAPI.dto.request.UserUpdateRequest;
 import com.example.IdentityUserAPI.entity.User;
@@ -18,8 +19,11 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/create-users")
-    User createUser(@RequestBody @Valid UserCreationRequest request){
-        return userService.createRequest(request);
+    ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request){
+        ApiResponse<User> apiResponse = new ApiResponse<>();
+
+        apiResponse.setResult(userService.createRequest(request));
+        return apiResponse;
     }
 
     @GetMapping("/get-users")
