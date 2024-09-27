@@ -1,14 +1,17 @@
 package com.example.IdentityUserAPI.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL) //Xoa message neu message = null
 public class ApiResponse <T>{
-    private int code;
-    private String message;
-    private T result;
+    int code;
+    String message;
+    T result;
 }
