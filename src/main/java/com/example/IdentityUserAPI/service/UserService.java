@@ -8,12 +8,16 @@ import com.example.IdentityUserAPI.exception.AppException;
 import com.example.IdentityUserAPI.exception.ErrorCode;
 import com.example.IdentityUserAPI.mapper.UserMapper;
 import com.example.IdentityUserAPI.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     @Autowired
     private UserRepository userRepository;
@@ -27,6 +31,8 @@ public class UserService {
         }
 
         User user = userMapper.toUser(request);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(5);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         return userRepository.save(user);
     }
